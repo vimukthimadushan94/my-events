@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
 
 type FormData = {
     firstName: string;
@@ -42,14 +43,23 @@ const RegisterForm: React.FC = () => {
 
             if (response.ok) {
                 setMessage("Registration successful!");
+                toast.success(message, {
+                    position: "top-left"
+                });
                 setTimeout(() => router.push("/login"), 1000);
             } else {
                 const errorData = await response.json();
-                setMessage(`Error: ${errorData.message || "Registration failed"}`);
+                const errorMessage = `Error: ${errorData[0].description || "Registration failed"}`;
+                setMessage(errorMessage);
+                toast.error(message, {
+                    position: "top-left"
+                });
             }
         } catch (error) {
             setMessage("An unexpected error occurred.");
-            console.error("Error:", error);
+            toast.error(message, {
+                position: "top-left"
+            });
         }
     };
 
@@ -117,11 +127,7 @@ const RegisterForm: React.FC = () => {
             >
                 Register
             </button>
-            {message && (
-                <p className="mt-4 text-center text-sm font-medium text-red-500">
-                    {message}
-                </p>
-            )}
+            <ToastContainer />
         </form>
     );
 };

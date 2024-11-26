@@ -1,6 +1,7 @@
 import SiteFooter from './_components/SiteFooter';
 import SiteHeader from './_components/SiteHeader';
 import "./globals.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata = {
   title: 'Next.js',
