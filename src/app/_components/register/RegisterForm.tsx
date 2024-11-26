@@ -18,7 +18,6 @@ const RegisterForm: React.FC = () => {
         password: "",
     });
 
-    const [message, setMessage] = useState<string>("");
     const router = useRouter();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,22 +41,19 @@ const RegisterForm: React.FC = () => {
             });
 
             if (response.ok) {
-                setMessage("Registration successful!");
-                toast.success(message, {
+                toast.success("Registration successful!", {
                     position: "top-left"
                 });
-                setTimeout(() => router.push("/login"), 1000);
+                setTimeout(() => router.push("/login"), 2500);
             } else {
                 const errorData = await response.json();
                 const errorMessage = `Error: ${errorData[0].description || "Registration failed"}`;
-                setMessage(errorMessage);
-                toast.error(message, {
+                toast.error(errorMessage, {
                     position: "top-left"
                 });
             }
         } catch (error) {
-            setMessage("An unexpected error occurred.");
-            toast.error(message, {
+            toast.error("An unexpected error occurred.", {
                 position: "top-left"
             });
         }
@@ -76,7 +72,7 @@ const RegisterForm: React.FC = () => {
                     value={formData.firstName}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-500"
                 />
             </div>
             <div>
@@ -90,7 +86,7 @@ const RegisterForm: React.FC = () => {
                     value={formData.lastName}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-500"
                 />
             </div>
             <div>
@@ -104,7 +100,7 @@ const RegisterForm: React.FC = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-500"
                 />
             </div>
             <div>
@@ -118,7 +114,7 @@ const RegisterForm: React.FC = () => {
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-500"
                 />
             </div>
             <button
