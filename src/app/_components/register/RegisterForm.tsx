@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
+import { signIn, useSession } from "next-auth/react";
+import { auth } from "@/app/auth";
 
 type FormData = {
     firstName: string;
@@ -122,6 +124,9 @@ const RegisterForm: React.FC = () => {
                 className="w-full px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-500"
             >
                 Register
+            </button>
+            <button className="text-green-600" onClick={() => signIn()}>
+                Sign In
             </button>
             <ToastContainer />
         </form>
