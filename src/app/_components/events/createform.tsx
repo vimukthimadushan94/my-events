@@ -2,8 +2,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
-import { signIn, useSession } from "next-auth/react";
-import { auth } from "@/app/auth";
 
 type FormData = {
     firstName: string;
@@ -12,7 +10,7 @@ type FormData = {
     password: string;
 };
 
-const RegisterForm: React.FC = () => {
+const CreateEventForm: React.FC = () => {
     const [formData, setFormData] = useState<FormData>({
         firstName: "",
         lastName: "",
@@ -130,4 +128,4 @@ const RegisterForm: React.FC = () => {
     );
 };
 
-export default RegisterForm;
+export default CreateEventForm;

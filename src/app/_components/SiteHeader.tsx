@@ -19,9 +19,12 @@ export default function SiteHeader() {
                             Contact
                         </Link>
                     </nav>
-                    <button className="bg-white text-blue-600 px-4 py-2 rounded-md shadow hover:bg-gray-100">
+                    <Link href="/login" className="bg-white text-blue-600 px-4 py-2 rounded-md shadow hover:bg-gray-100">
+                        Login
+                    </Link>
+                    <Link href="/register" className="bg-white text-blue-600 px-4 py-2 rounded-md shadow hover:bg-gray-100">
                         Sign Up
-                    </button>
+                    </Link>
                 </div>
             </header>
         </>
