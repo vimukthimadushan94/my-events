@@ -4,22 +4,6 @@ import { ToastContainer } from "react-toastify"
 
 export function SignIn() {
     return (
-        // <form
-        //     action={async (formData) => {
-        //         "use server"
-        //         await signIn("credentials", formData, { redirectTo: "/register" })
-        //     }}
-        // >
-        //     <label>
-        //         Email
-        //         <input name="email" type="email" />
-        //     </label>
-        //     <label>
-        //         Password
-        //         <input name="password" type="password" />
-        //     </label>
-        //     <button>Sign In</button>
-        // </form>
         <form
             action={async (formData) => {
                 "use server"
