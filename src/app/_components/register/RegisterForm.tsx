@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import { signIn, useSession } from "next-auth/react";
 import { auth } from "@/app/auth";
+import { registerAction } from "@/app/app/actions/authActions";
 
 type FormData = {
     firstName: string;
@@ -30,34 +31,14 @@ const RegisterForm: React.FC = () => {
         }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            const appUrl = process.env.NEXT_PUBLIC_APP_URL;
-            const response = await fetch(appUrl + "/api/Auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-                toast.success("Registration successful!", {
-                    position: "top-left"
-                });
-                setTimeout(() => router.push("/login"), 2500);
-            } else {
-                const errorData = await response.json();
-                const errorMessage = `Error: ${errorData[0].description || "Registration failed"}`;
-                toast.error(errorMessage, {
-                    position: "top-left"
-                });
-            }
-        } catch (error) {
-            toast.error("An unexpected error occurred.", {
-                position: "top-left"
-            });
+            await registerAction(formData);
+            toast.success("Registration successful!", { position: "top-left" });
+            setTimeout(() => router.push("/login"), 2500);
+        } catch (error: any) {
+            toast.error(error.message || "An unexpected error occurred.", { position: "top-left" });
         }
     };
 
