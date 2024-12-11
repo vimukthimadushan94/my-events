@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
+import { ColorPicker, Hue, useColor } from "react-color-palette";
+import "react-color-palette/css";
 
 type FormData = {
     name: string;
@@ -20,6 +22,8 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ authToken }) => {
         description: ""
     });
 
+    const [color, setColor] = useColor("rgb(86 30 203)");
+
     const router = useRouter();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +31,14 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ authToken }) => {
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
+        }));
+    };
+
+    const handleColorChange = (newColor: any) => {
+        setColor(newColor);
+        setFormData((prevData) => ({
+            ...prevData,
+            color: newColor.hex,
         }));
     };
 
@@ -89,15 +101,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ authToken }) => {
                 <label htmlFor="color" className="block text-sm font-medium text-gray-700">
                     Chose Your Preffered Color
                 </label>
-                <input
-                    type="text"
-                    name="color"
-                    id="color"
-                    value={formData.color}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-500"
-                />
+                <ColorPicker height={100} color={color} onChange={handleColorChange} />
             </div>
             <div>
                 <label htmlFor="description" className="block text-sm font-medium text-gray-700">
