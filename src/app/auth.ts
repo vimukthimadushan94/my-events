@@ -19,9 +19,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         password: credentials?.password,
                     }),
                 });
-                const user = await res.json();
 
-                if (!user) {
+                const user = await res.json();
+                if (user.status == 401) {
                     throw new Error("Invalid credentials.")
                 }
                 return user

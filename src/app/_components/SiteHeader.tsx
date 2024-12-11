@@ -14,6 +14,9 @@ export default function SiteHeader() {
                         <Link href="/event/create" className="hover:text-gray-200">
                             Create Event
                         </Link>
+                        <Link href="/event/list" className="hover:text-gray-200">
+                            Event List
+                        </Link>
                         <Link href="/services" className="hover:text-gray-200">
                             Services
                         </Link>

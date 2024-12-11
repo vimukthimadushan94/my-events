@@ -36,7 +36,7 @@ const RegisterForm: React.FC = () => {
         try {
             await registerAction(formData);
             toast.success("Registration successful!", { position: "top-left" });
-            setTimeout(() => router.push("/login"), 2500);
+            setTimeout(() => router.push("/"), 2500);
         } catch (error: any) {
             toast.error(error.message || "An unexpected error occurred.", { position: "top-left" });
         }

@@ -4,18 +4,20 @@ import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 
 type FormData = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
+    name: string;
+    color: string;
+    description: string;
 };
 
-const CreateEventForm: React.FC = () => {
+interface CreateEventFormProps {
+    authToken: string;
+}
+
+const CreateEventForm: React.FC<CreateEventFormProps> = ({ authToken }) => {
     const [formData, setFormData] = useState<FormData>({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
+        name: "",
+        color: "",
+        description: ""
     });
 
     const router = useRouter();
@@ -32,22 +34,30 @@ const CreateEventForm: React.FC = () => {
         e.preventDefault();
         try {
             const appUrl = process.env.NEXT_PUBLIC_APP_URL;
-            const response = await fetch(appUrl + "/api/Auth/register", {
+            const response = await fetch(appUrl + "/api/Events", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${authToken}`
                 },
                 body: JSON.stringify(formData),
             });
 
             if (response.ok) {
-                toast.success("Registration successful!", {
+                toast.success("Event created successful!", {
                     position: "top-left"
                 });
-                setTimeout(() => router.push("/login"), 2500);
+
+                setFormData({
+                    name: "",
+                    color: "",
+                    description: ""
+                });
+
+                setTimeout(() => router.push("/event/list"), 2500);
             } else {
                 const errorData = await response.json();
-                const errorMessage = `Error: ${errorData[0].description || "Registration failed"}`;
+                const errorMessage = `Error: ${errorData[0].description || "Event Create failed"}`;
                 toast.error(errorMessage, {
                     position: "top-left"
                 });
@@ -62,56 +72,42 @@ const CreateEventForm: React.FC = () => {
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-                    First Name
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                    Event Name
                 </label>
                 <input
                     type="text"
-                    name="firstName"
-                    id="firstName"
-                    value={formData.firstName}
+                    name="name"
+                    id="name"
+                    value={formData.name}
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-500"
                 />
             </div>
             <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-                    Last Name
+                <label htmlFor="color" className="block text-sm font-medium text-gray-700">
+                    Chose Your Preffered Color
                 </label>
                 <input
                     type="text"
-                    name="lastName"
-                    id="lastName"
-                    value={formData.lastName}
+                    name="color"
+                    id="color"
+                    value={formData.color}
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-500"
                 />
             </div>
             <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                    Description
                 </label>
                 <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-500"
-                />
-            </div>
-            <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                    Password
-                </label>
-                <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    value={formData.password}
+                    type="text"
+                    name="description"
+                    id="description"
+                    value={formData.description}
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-500"
@@ -121,7 +117,7 @@ const CreateEventForm: React.FC = () => {
                 type="submit"
                 className="w-full px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-500"
             >
-                Register
+                Submit
             </button>
             <ToastContainer />
         </form>

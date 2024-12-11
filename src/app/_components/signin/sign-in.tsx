@@ -1,15 +1,29 @@
+"use client";
+import { loginAction } from "@/app/app/actions/authActions";
 import { signIn } from "@/app/auth"
-import { ToastContainer } from "react-toastify"
+import { useRouter } from "next/navigation";
+import { FormEvent } from "react";
+import { toast, ToastContainer } from "react-toastify"
 
 
 export function SignIn() {
+    const router = useRouter();
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        try {
+            await loginAction(formData)
+            // toast.success("Login successful!", { position: "top-left" });
+            // setTimeout(() => router.push("/event/create"), 2500);
+        } catch (error: any) {
+            toast.error("Login fail!", { position: "top-left" });
+        }
+
+
+    };
     return (
-        <form
-            action={async (formData) => {
-                "use server"
-                await signIn("credentials", formData, { redirectTo: "/register" })
-            }}
-        >
+        <form onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
                     Email
