@@ -4,6 +4,14 @@ import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import { ColorPicker, Hue, useColor } from "react-color-palette";
 import "react-color-palette/css";
+import {
+    Modal,
+    ModalContent,
+    Input,
+    Form,
+    Button,
+    useDisclosure,
+} from "@nextui-org/react";
 
 type FormData = {
     name: string;
@@ -16,6 +24,7 @@ interface CreateEventFormProps {
 }
 
 const CreateEventForm: React.FC<CreateEventFormProps> = ({ authToken }) => {
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [formData, setFormData] = useState<FormData>({
         name: "",
         color: "",
@@ -82,49 +91,57 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ authToken }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                    Event Name
-                </label>
-                <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-500"
-                />
-            </div>
-            <div>
-                <label htmlFor="color" className="block text-sm font-medium text-gray-700">
-                    Chose Your Preffered Color
-                </label>
-                <ColorPicker height={100} color={color} onChange={handleColorChange} />
-            </div>
-            <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                    Description
-                </label>
-                <input
-                    type="text"
-                    name="description"
-                    id="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 mt-1 border rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-gray-500"
-                />
-            </div>
-            <button
-                type="submit"
-                className="w-full px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-500"
-            >
-                Submit
-            </button>
-            <ToastContainer />
-        </form>
+        <>
+            <Button onPress={onOpen}>Create Event</Button>
+            <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
+                <ModalContent>
+                    {(onClose) => (
+                        <div className="flex items-center justify-center min-h-screen">
+                            <div className="w-full max-w-md p-8 rounded shadow-lg">
+                                <h2 className="mb-6 text-2xl font-bold text-center ">
+                                    Create Your Event Here
+                                </h2>
+                                <Form className="w-full max-w-xs" validationBehavior="native" onSubmit={handleSubmit}>
+
+                                    <Input
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        isRequired
+                                        errorMessage="Please enter a valid name"
+                                        label="Name"
+                                        placeholder="Enter your name"
+                                        type="text"
+                                        labelPlacement="outside"
+                                        name="name"
+                                    />
+                                    <div>
+                                        <label htmlFor="color" className="block text-sm font-medium text-gray-700">
+                                            Chose Your Preffered Color
+                                        </label>
+                                        <ColorPicker height={100} color={color} onChange={handleColorChange} />
+                                    </div>
+
+                                    <Input
+                                        type="text"
+                                        name="description"
+                                        value={formData.description}
+                                        onChange={handleChange}
+                                        isRequired
+                                        label="Description"
+                                        labelPlacement="outside"
+                                        placeholder="Enter your description for your event"
+                                    />
+                                    <Button type="submit" variant="bordered">
+                                        Submit
+                                    </Button>
+                                    <ToastContainer />
+                                </Form>
+                            </div>
+                        </div>
+                    )}
+                </ModalContent>
+            </Modal>
+        </>
     );
 };
 
