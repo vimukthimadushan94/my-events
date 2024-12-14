@@ -2,29 +2,46 @@
 import Link from "next/link";
 import { auth, signOut } from "../auth";
 import CreateEventForm from "./events/createform";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@nextui-org/react";
 
+export const AcmeLogo = () => {
+    return (
+        <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+            <path
+                clipRule="evenodd"
+                d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
+                fill="currentColor"
+                fillRule="evenodd"
+            />
+        </svg>
+    );
+};
 export default async function SiteHeader() {
 
     const session = await auth();
 
     if (!session) {
-        // Handle unauthenticated state
         return (
-            <header className="bg-blue-600 text-white shadow-md">
-                <div className="container mx-auto flex justify-between items-center p-4">
-                    <Link href="/" className="text-xl font-bold">
-                        MySite
-                    </Link>
-                    <nav className="space-x-4">
-                        <Link href="/login" className="bg-white text-blue-600 px-4 py-2 rounded-md shadow hover:bg-gray-100">
+            <Navbar shouldHideOnScroll>
+                <NavbarBrand>
+                    <AcmeLogo />
+                    <p className="font-bold text-inherit">ACME</p>
+                </NavbarBrand>
+                <NavbarContent className="hidden sm:flex gap-4" justify="center">
+                </NavbarContent>
+                <NavbarContent justify="end">
+                    <NavbarItem>
+                        <Button as={Link} color="primary" href="/login" variant="flat">
                             Login
-                        </Link>
-                        <Link href="/register" className="bg-white text-blue-600 px-4 py-2 rounded-md shadow hover:bg-gray-100">
+                        </Button>
+                    </NavbarItem>
+                    <NavbarItem>
+                        <Button as={Link} color="primary" href="/register" variant="flat">
                             Sign Up
-                        </Link>
-                    </nav>
-                </div>
-            </header>
+                        </Button>
+                    </NavbarItem>
+                </NavbarContent>
+            </Navbar>
         );
     }
 
@@ -32,41 +49,45 @@ export default async function SiteHeader() {
 
     return (
         <>
-            <header className="bg-blue-600 text-white shadow-md">
-                <div className="container mx-auto flex justify-between items-center p-4">
-                    <Link href="/" className="text-xl font-bold">
-                        MySite
-                    </Link>
-                    <nav className="space-x-4">
-                        {/* <Link href="/event/create" className="hover:text-gray-200">
-                            Create Event
-                        </Link> */}
+            <Navbar shouldHideOnScroll>
+                <NavbarBrand>
+                    <AcmeLogo />
+                    <p className="font-bold text-inherit">ACME</p>
+                </NavbarBrand>
+                <NavbarContent className="hidden sm:flex gap-4" justify="center">
+                    <NavbarItem>
                         <CreateEventForm authToken={userToken} />
-                        <Link href="/event/list" className="hover:text-gray-200">
+                    </NavbarItem>
+                    <NavbarItem isActive>
+                        <Link aria-current="page" href="/event/list">
                             Event List
                         </Link>
-                        <Link href="/services" className="hover:text-gray-200">
-                            Services
+                    </NavbarItem>
+                    <NavbarItem>
+                        <Link color="foreground" href="/event/update">
+                            Event Update
                         </Link>
-                        <Link href="/contact" className="hover:text-gray-200">
+                    </NavbarItem>
+                    <NavbarItem>
+                        <Link color="foreground" href="/contact">
                             Contact
                         </Link>
-                    </nav>
+                    </NavbarItem>
+                </NavbarContent>
+                <NavbarContent justify="end">
+                    <NavbarItem className="hidden lg:flex">
+                        <form
+                            action={async () => {
+                                'use server';
+                                await signOut();
+                            }}
+                        >
+                            <Button type="submit">Sign Out</Button>
+                        </form>
+                    </NavbarItem>
 
-                    <form
-                        action={async () => {
-                            'use server';
-                            await signOut();
-                        }}
-                    >
-                        <button className="bg-white text-blue-600 px-4 py-2 rounded-md shadow hover:bg-gray-100">
-
-                            <div className="hidden md:block">Sign Out</div>
-                        </button>
-                    </form>
-
-                </div>
-            </header>
+                </NavbarContent>
+            </Navbar>
         </>
     )
 }

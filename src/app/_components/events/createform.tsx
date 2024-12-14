@@ -11,6 +11,7 @@ import {
     Form,
     Button,
     useDisclosure,
+    Textarea,
 } from "@nextui-org/react";
 
 type FormData = {
@@ -24,7 +25,7 @@ interface CreateEventFormProps {
 }
 
 const CreateEventForm: React.FC<CreateEventFormProps> = ({ authToken }) => {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [formData, setFormData] = useState<FormData>({
         name: "",
         color: "",
@@ -75,7 +76,10 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ authToken }) => {
                     description: ""
                 });
 
-                setTimeout(() => router.push("/event/list"), 2500);
+                setTimeout(() => {
+                    onClose()
+                    router.push("/event/list")
+                }, 2500);
             } else {
                 const errorData = await response.json();
                 const errorMessage = `Error: ${errorData[0].description || "Event Create failed"}`;
@@ -96,12 +100,12 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ authToken }) => {
             <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
-                        <div className="flex items-center justify-center min-h-screen">
+                        <div className="flex items-center justify-center">
                             <div className="w-full max-w-md p-8 rounded shadow-lg">
                                 <h2 className="mb-6 text-2xl font-bold text-center ">
                                     Create Your Event Here
                                 </h2>
-                                <Form className="w-full max-w-xs" validationBehavior="native" onSubmit={handleSubmit}>
+                                <Form validationBehavior="native" onSubmit={handleSubmit}>
 
                                     <Input
                                         value={formData.name}
@@ -120,16 +124,14 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ authToken }) => {
                                         </label>
                                         <ColorPicker height={100} color={color} onChange={handleColorChange} />
                                     </div>
-
-                                    <Input
-                                        type="text"
-                                        name="description"
+                                    <Textarea
                                         value={formData.description}
                                         onChange={handleChange}
-                                        isRequired
+                                        name="description"
                                         label="Description"
                                         labelPlacement="outside"
-                                        placeholder="Enter your description for your event"
+                                        minRows={2}
+                                        placeholder="Enter your description"
                                     />
                                     <Button type="submit" variant="bordered">
                                         Submit
