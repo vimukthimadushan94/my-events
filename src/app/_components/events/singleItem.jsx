@@ -7,7 +7,7 @@ export default function EventSingleItem({ event }) {
 
     return (
         <Card className="max-w-[340px]" style={{ backgroundColor: event.color }}>
-            <Link href={"/event/update"}
+            <Link href={"/event/" + event.id}
             >
                 <CardHeader className="justify-between">
                     <div className="flex gap-5">
