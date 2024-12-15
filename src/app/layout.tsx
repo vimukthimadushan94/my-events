@@ -16,15 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en" className='dark'>
       <head>
-        {/* Place metadata or external links here */}
       </head>
       <body>
         <Providers>
           <SiteHeader />
-
           {children}
-
-
           <SiteFooter />
         </Providers>
       </body>

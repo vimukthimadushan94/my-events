@@ -3,6 +3,7 @@ import Link from "next/link";
 import { auth, signOut } from "../auth";
 import CreateEventForm from "./events/createform";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@nextui-org/react";
+import { UserSession } from "@/types/userToken";
 
 export const AcmeLogo = () => {
     return (
@@ -18,7 +19,7 @@ export const AcmeLogo = () => {
 };
 export default async function SiteHeader() {
 
-    const session = await auth();
+    const session: UserSession = await auth();
 
     if (!session) {
         return (
@@ -45,8 +46,7 @@ export default async function SiteHeader() {
         );
     }
 
-    const userToken = session!.user.accessToken;
-
+    const userToken: string = session.user.accessToken;
     return (
         <>
             <Navbar shouldHideOnScroll>
@@ -56,7 +56,7 @@ export default async function SiteHeader() {
                 </NavbarBrand>
                 <NavbarContent className="hidden sm:flex gap-4" justify="center">
                     <NavbarItem>
-                        <CreateEventForm authToken={userToken} />
+                        {/* <CreateEventForm authToken={userToken} /> */}
                     </NavbarItem>
                     <NavbarItem isActive>
                         <Link aria-current="page" href="/event/list">
