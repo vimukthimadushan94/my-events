@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function EventSingleItem({ event }) {
 
     return (
-        <Card className="max-w-[340px]">
+        <Card className="max-w-[340px]" style={{ backgroundColor: event.color }}>
             <Link href={"/event/update"}
             >
                 <CardHeader className="justify-between">
