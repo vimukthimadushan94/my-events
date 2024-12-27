@@ -5,11 +5,11 @@ import { Session } from "next-auth";
 
 export default async function Page({ params }: { params: { id: string } }) {
     const id = params.id;
-    const session: Session | null = await auth();
+    const session = await auth();
     if (session === null) {
         return <>Invalid Token</>
     } else {
-        const userToken = session.user.accessToken;
+        const userToken = session.user?.accessToken;
         const appUrl = process.env.NEXT_PUBLIC_APP_URL;
         const response = await fetch(appUrl + "/api/" + id + "/eventItems", {
             headers: {

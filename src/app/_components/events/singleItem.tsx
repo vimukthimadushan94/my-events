@@ -1,9 +1,9 @@
-"use client"
 import React from "react";
 import { Card, CardHeader, CardBody, CardFooter, Avatar, Button } from "@nextui-org/react";
 import Link from "next/link";
+import { Event } from "@/types/mainTypes";
 
-export default function EventSingleItem({ event }) {
+export default function EventSingleItem({ event }: { event: Event }) {
 
     return (
         <Card className="max-w-[340px]" style={{ backgroundColor: event.color }}>

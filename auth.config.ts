@@ -25,5 +25,8 @@ export const authConfig = {
             }
         },
     },
+    session: {
+        maxAge: 50,
+    },
     providers: [Credentials({})],
 } satisfies NextAuthConfig;

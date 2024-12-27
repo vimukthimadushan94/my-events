@@ -1,5 +1,17 @@
-import NextAuth from "next-auth"
+import { User } from "@/types/mainTypes";
 import Credentials from "next-auth/providers/credentials"
+import NextAuth, { type DefaultSession } from "next-auth"
+
+declare module "next-auth" {
+    interface Session {
+        user: {
+            accessToken: string
+            /**
+             * Homma: https://authjs.dev/getting-started/typescript
+             */
+        } & DefaultSession["user"]
+    }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -39,9 +51,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return token;
         },
 
-        async session({ session, token }) {
-            session.user = token as any;
-            return session;
+        session({ session, token, user }) {
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    accessToken: token.accessToken,
+                },
+            }
         },
     }
 })

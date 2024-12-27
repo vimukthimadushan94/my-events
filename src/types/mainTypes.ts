@@ -17,6 +17,7 @@ export interface User {
     lockoutEnd: string | null;
     lockoutEnabled: boolean;
     accessFailedCount: number;
+    accessToken: string;
 }
 
 export interface Event {

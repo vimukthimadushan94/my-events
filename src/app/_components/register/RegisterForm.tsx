@@ -2,8 +2,6 @@
 import React, { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
-import { signIn, useSession } from "next-auth/react";
-import { auth } from "@/app/auth";
 import { registerAction } from "@/app/app/actions/authActions";
 
 type FormData = {

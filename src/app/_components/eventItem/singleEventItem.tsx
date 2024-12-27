@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardBody, CardFooter, Avatar } from "@nextui-org/react";
 
-export default async function SingleEventItem({ eventItems }) {
+export default async function SingleEventItem({ eventItems }: { eventItems: any }) {
 
     return (
 
