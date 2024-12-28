@@ -1,3 +1,5 @@
+
+import CreateEventItem from "@/app/_components/eventItem/createEventItem";
 import SingleEventItem from "@/app/_components/eventItem/singleEventItem";
 import { auth } from "@/app/auth";
 import { Session } from "next-auth";
@@ -18,7 +20,10 @@ export default async function Page({ params }: { params: { id: string } }) {
         });
         const eventItems = await response.json();
         return (
-            <SingleEventItem eventItems={eventItems} />
+            <>
+                <CreateEventItem />
+                <SingleEventItem eventItems={eventItems} />
+            </>
         );
     }
 
