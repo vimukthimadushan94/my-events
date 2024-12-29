@@ -19,9 +19,17 @@ export default async function Page({ params }: { params: { id: string } }) {
             },
         });
         const eventItems = await response.json();
+
+        const userResponse = await fetch(appUrl + "/api/Auth/app-users", {
+            headers: {
+                "Authorization": `Bearer ${userToken}`,
+            },
+        });
+        const users = await userResponse.json();
+
         return (
             <>
-                <CreateEventItem />
+                <CreateEventItem users={users} />
                 <SingleEventItem eventItems={eventItems} />
             </>
         );

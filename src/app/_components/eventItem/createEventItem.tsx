@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
     Drawer,
     DrawerContent,
@@ -17,9 +17,17 @@ import {
 import { ToastContainer } from "react-toastify";
 import { today, getLocalTimeZone } from "@internationalized/date";
 import UserDropdown from "./userDropdown";
+import { User } from "@/types/mainTypes";
 
-export default function CreateEventItem() {
+export default function CreateEventItem({ users }: { users: User[] }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
+
+    const handleSelectedUsers = (ids: string[]) => {
+        setSelectedUserIds(ids);
+        console.log("Selected User IDs from Child:", ids);
+    };
+
 
     return (
         <>
@@ -89,7 +97,7 @@ export default function CreateEventItem() {
                                                 <h3 className="text-default-500 text-small">
                                                     Select Participants
                                                 </h3>
-                                                <UserDropdown />
+                                                <UserDropdown users={users} onSelectionChange={handleSelectedUsers} />
                                             </div>
                                             <div className="flex justify-center mt-6">
                                                 <Button type="submit" variant="bordered">

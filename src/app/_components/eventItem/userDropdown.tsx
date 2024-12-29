@@ -1,14 +1,26 @@
 import React from "react";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
-import { auth } from "@/app/auth";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, user } from "@nextui-org/react";
+import { User } from "@/types/mainTypes";
 
-export default function UserDropdown() {
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Dinuka", "Kamal"]));
+export default function UserDropdown({ users, onSelectionChange }: { users: User[], onSelectionChange: (selectedIds: string[]) => void }) {
+    const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
 
-    const selectedValue = React.useMemo(
+
+    const selectedUserIds = React.useMemo(
         () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
         [selectedKeys],
     );
+
+    const selectedValue = React.useMemo(() => {
+        const selectedIds = Array.from(selectedKeys);
+        const selectedUsers = users.filter(user => selectedIds.includes(user.id));
+        return selectedUsers.map(user => user.firstName).join(", ");
+    }, [selectedKeys, users]);
+
+    React.useEffect(() => {
+        onSelectionChange(selectedUserIds);
+    }, [selectedUserIds]);
+
 
     return (
         <Dropdown>
@@ -19,18 +31,16 @@ export default function UserDropdown() {
             </DropdownTrigger>
             <DropdownMenu
                 disallowEmptySelection
-                aria-label="Multiple selection example"
+                aria-label="Select Multiple Users"
                 closeOnSelect={false}
                 selectedKeys={selectedKeys}
                 selectionMode="multiple"
                 variant="flat"
-                onSelectionChange={setSelectedKeys}
+                onSelectionChange={(keys) => setSelectedKeys(keys as Set<React.Key>)}
             >
-                <DropdownItem key="Sunimal">Sunimal</DropdownItem>
-                <DropdownItem key="number">Kamal</DropdownItem>
-                <DropdownItem key="date">Date</DropdownItem>
-                <DropdownItem key="single_date">Single Date</DropdownItem>
-                <DropdownItem key="iteration">Iteration</DropdownItem>
+                {users.map(user => (
+                    <DropdownItem key={user.id} value={user.firstName}>{user.firstName + " " + user.lastName}</DropdownItem>
+                ))}
             </DropdownMenu>
         </Dropdown>
     );
