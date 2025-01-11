@@ -18,10 +18,13 @@ import { ToastContainer, toast } from "react-toastify";
 import { today, getLocalTimeZone } from "@internationalized/date";
 import UserDropdown from "./userDropdown";
 import { User } from "@/types/mainTypes";
+import { useRouter } from "next/navigation";
 
-export default function CreateEventItem({ users }: { users: User[] }) {
+export default function CreateEventItem({ users, eventItemId }: { users: User[], eventItemId: string }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
+    const router = useRouter();
+
     let [dateValue, setDateValue] = React.useState({
         start: today(getLocalTimeZone()),
         end: today(getLocalTimeZone()).add({ days: 1 }),
@@ -36,7 +39,7 @@ export default function CreateEventItem({ users }: { users: User[] }) {
         const formData = new FormData(e.currentTarget);
 
         const eventData = {
-            eventId: 4,
+            eventId: eventItemId,
             name: formData.get("name"),
             description: formData.get("description"),
             price: formData.get("price") === "" ? 0 : parseFloat(formData.get("price") as string),
@@ -59,6 +62,7 @@ export default function CreateEventItem({ users }: { users: User[] }) {
             if (response.ok) {
                 toast.success("Event created successfully!");
                 onClose();
+                router.push("/event/" + eventItemId);
             } else {
                 const errorData = await response.json();
                 toast.error(`Error: ${errorData.message || "Something went wrong"}`);

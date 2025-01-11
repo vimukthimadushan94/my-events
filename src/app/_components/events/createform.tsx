@@ -97,7 +97,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ authToken }) => {
     return (
         <>
             <Button onPress={onOpen}>Create Event</Button>
-            <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal id="create-model-popup" backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
                         <div className="flex items-center justify-center">

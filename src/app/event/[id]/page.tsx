@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
         return (
             <>
-                <CreateEventItem users={users} />
+                <CreateEventItem users={users} eventItemId={params.id} />
                 <SingleEventItem eventItems={eventItems} />
             </>
         );
