@@ -42,7 +42,7 @@ export default function CreateEventItem({ users }: { users: User[] }) {
             price: formData.get("price") === "" ? 0 : parseFloat(formData.get("price") as string),
             from: dateValue.start.toString() + "T" + formData.get("startTime"),
             to: dateValue.end.toString() + "T" + formData.get("endTime"),
-            participants: selectedUserIds,
+            users: selectedUserIds,
             location: formData.get("location"),
         };
 
