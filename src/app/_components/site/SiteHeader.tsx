@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, Dropdown, DropdownTrigger, Avatar, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import LogoutButton from "@/app/site/LogoutButton";
 import { auth } from "@/app/auth";
 import CreateEventForm from "../events/createform";
@@ -78,6 +78,14 @@ export default async function SiteHeader() {
                         <NavbarItem className="hidden lg:flex">
                             <LogoutButton />
                         </NavbarItem>
+                        <Avatar
+                            isBordered
+                            className="transition-transform"
+                            color="secondary"
+                            name="Jason Hughes"
+                            size="sm"
+                            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                        />
                     </NavbarContent>
                 </Navbar>
             </>

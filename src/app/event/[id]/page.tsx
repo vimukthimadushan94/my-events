@@ -6,7 +6,7 @@ import { Session } from "next-auth";
 
 
 export default async function Page({ params }: { params: { id: string } }) {
-    const id = params.id;
+    const { id } = await params
     const session = await auth();
     if (session === null) {
         return <>Invalid Token</>
@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
         return (
             <>
-                <CreateEventItem users={users} eventItemId={params.id} />
+                <CreateEventItem users={users} eventItemId={id} />
                 <SingleEventItem eventItems={eventItems} />
             </>
         );
