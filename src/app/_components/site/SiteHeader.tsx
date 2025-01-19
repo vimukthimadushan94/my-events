@@ -18,6 +18,8 @@ export const AcmeLogo = () => {
 };
 export default async function SiteHeader() {
 
+ 
+
     const session = await auth();
     console.log(session);
 
