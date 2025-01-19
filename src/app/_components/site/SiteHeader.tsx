@@ -3,6 +3,7 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, Dropdown, Dropd
 import LogoutButton from "@/app/site/LogoutButton";
 import { auth } from "@/app/auth";
 import CreateEventForm from "../events/createform";
+import ProfileSection from "./ProfileSection";
 
 export const AcmeLogo = () => {
     return (
@@ -18,11 +19,7 @@ export const AcmeLogo = () => {
 };
 export default async function SiteHeader() {
 
- 
-
     const session = await auth();
-    console.log(session);
-
 
     if (!session) {
         return (
@@ -80,14 +77,9 @@ export default async function SiteHeader() {
                         <NavbarItem className="hidden lg:flex">
                             <LogoutButton />
                         </NavbarItem>
-                        <Avatar
-                            isBordered
-                            className="transition-transform"
-                            color="secondary"
-                            name="Jason Hughes"
-                            size="sm"
-                            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                        />
+                        <Link aria-current="page" href="/update-profile">
+                            <ProfileSection userToken={userToken} />
+                        </Link>
                     </NavbarContent>
                 </Navbar>
             </>

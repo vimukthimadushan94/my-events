@@ -1,12 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Input, Avatar, Spacer, Form, form } from "@nextui-org/react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-const UpdateProfileForm = ({ authToken }) => {
+interface AuthUser {
+    firstName: string;
+    lastName: string;
+    email: string;
+    profileImageUrl: string;
+}
+
+export default function UpdateProfileForm({ authToken }: { authToken: string }) {
+    const backendUrl = process.env.NEXT_PUBLIC_APP_URL;
     const [profileImage, setProfileImage] = useState<string | null>(null);
+    const [authUser, setAuthUser] = useState<AuthUser>();
     const router = useRouter();
 
 
@@ -18,46 +27,58 @@ const UpdateProfileForm = ({ authToken }) => {
         }
     };
 
+    useEffect(() => {
+
+        const fetchProfile = async () => {
+            const response = await fetch(backendUrl + "/api/Auth/profile", {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+            const data = await response.json();
+            setAuthUser(data);
+        };
+        fetchProfile();
+    }, [setAuthUser, authToken]);
+
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-
-
-
-        formData.append("FirstName", formData.get("firstname") as string);
-        formData.append("LastName", formData.get("lastname") as string);
-
-
+        const target = e.currentTarget;
+        const fileInput = target.querySelector('input[type="file"]') as HTMLInputElement;
+        if (fileInput?.files?.length) {
+            formData.append("profilePicture", fileInput.files[0]);
+        }
 
         try {
-            const appUrl = process.env.NEXT_PUBLIC_APP_URL;
-            const response = await fetch(`${appUrl}/api/Auth/update-profile`, {
+            const response = await fetch(`${backendUrl}/api/Auth/update-profile`, {
                 method: "PUT",
                 headers: {
                     accept: "*/*",
-                    "Authorization": `Bearer ${authToken}`
+                    Authorization: `Bearer ${authToken}`,
                 },
                 body: formData,
             });
 
             if (response.ok) {
-                toast.success("Event created successfully!");
-                router.push("/");
+                toast.success("Profile updated successfully!");
+                router.push("/update-profile");
             } else {
                 const errorData = await response.json();
                 toast.error(`Error: ${errorData.message || "Something went wrong"}`);
             }
         } catch (error) {
-            console.error("Error creating event:", error);
-            toast.error("Failed to create event. Please try again.");
+            console.error("Error updating profile:", error);
+            toast.error("Failed to update profile. Please try again.");
         }
     };
 
     return (
-        <Form validationBehavior="native" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <Avatar
-                    src={profileImage || "/default-avatar.png"}
+                    src={profileImage || backendUrl + authUser.profileImageUrl}
                     alt="Profile Image"
                     size="lg"
                 />
@@ -70,6 +91,7 @@ const UpdateProfileForm = ({ authToken }) => {
                     onChange={handleImageChange}
                     style={{ display: "none" }}
                     id="upload-image"
+                    name="ProfilePicture"
                 />
                 <label htmlFor="upload-image">
                     <Button as="span">
@@ -83,6 +105,13 @@ const UpdateProfileForm = ({ authToken }) => {
                 label="First Name"
                 placeholder="Enter your first name"
                 name="firstname"
+                value={authUser?.firstName}
+                onChange={(e) =>
+                    setAuthUser((prev) => ({
+                        ...prev,
+                        firstName: e.target.value,
+                    }))
+                }
             />
             <Spacer y={1} />
             <Input
@@ -90,6 +119,13 @@ const UpdateProfileForm = ({ authToken }) => {
                 label="Last Name"
                 placeholder="Enter your last name"
                 name="lastname"
+                value={authUser?.lastName}
+                onChange={(e) =>
+                    setAuthUser((prev) => ({
+                        ...prev,
+                        lastName: e.target.value,
+                    }))
+                }
             />
             <Spacer y={1.5} />
             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -97,8 +133,6 @@ const UpdateProfileForm = ({ authToken }) => {
                     Save Changes
                 </Button>
             </div>
-        </Form>
+        </form>
     );
 };
-
-export default UpdateProfileForm;

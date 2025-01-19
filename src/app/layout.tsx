@@ -4,6 +4,7 @@ import "./globals.css";
 import 'react-toastify/dist/ReactToastify.css';
 import { Providers } from './providers';
 import { SessionProvider } from 'next-auth/react';
+import { UserProvider } from './contexts/UserContext';
 
 export const metadata = {
   title: 'Event Manager',
@@ -22,9 +23,11 @@ export default function RootLayout({
       <body>
         <Providers>
           <SessionProvider>
-            <SiteHeader />
-            {children}
-            <SiteFooter />
+            <UserProvider>
+              <SiteHeader />
+              {children}
+              <SiteFooter />
+            </UserProvider>
           </SessionProvider>
         </Providers>
       </body>
