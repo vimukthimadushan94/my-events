@@ -4,18 +4,13 @@ import React, { useEffect, useState } from "react";
 import { Button, Input, Avatar, Spacer, Form, form } from "@nextui-org/react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-
-interface AuthUser {
-    firstName: string;
-    lastName: string;
-    email: string;
-    profileImageUrl: string;
-}
+import { useUser } from "../contexts/UserContext";
+import AuthUser from "@/types/authUser";
 
 export default function UpdateProfileForm({ authToken }: { authToken: string }) {
     const backendUrl = process.env.NEXT_PUBLIC_APP_URL;
     const [profileImage, setProfileImage] = useState<string | null>(null);
-    const [authUser, setAuthUser] = useState<AuthUser>();
+    const { user, setUser } = useUser();
     const router = useRouter();
 
 
@@ -26,21 +21,6 @@ export default function UpdateProfileForm({ authToken }: { authToken: string }) 
             setProfileImage(imageUrl);
         }
     };
-
-    useEffect(() => {
-
-        const fetchProfile = async () => {
-            const response = await fetch(backendUrl + "/api/Auth/profile", {
-                headers: {
-                    Authorization: `Bearer ${authToken}`,
-                },
-            });
-            const data = await response.json();
-            setAuthUser(data);
-        };
-        fetchProfile();
-    }, [setAuthUser, authToken]);
-
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -62,8 +42,17 @@ export default function UpdateProfileForm({ authToken }: { authToken: string }) 
             });
 
             if (response.ok) {
+                var data = await response.json();
+                var userResponse: AuthUser = {
+                    firstName: data.firstName,
+                    email: data.email,
+                    lastName: data.lastName,
+                    profileImageUrl: data.profilePicturePath
+                };
+                console.log(userResponse);
+                setUser(userResponse);
                 toast.success("Profile updated successfully!");
-                router.push("/update-profile");
+                router.push("/");
             } else {
                 const errorData = await response.json();
                 toast.error(`Error: ${errorData.message || "Something went wrong"}`);
@@ -78,7 +67,7 @@ export default function UpdateProfileForm({ authToken }: { authToken: string }) 
         <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <Avatar
-                    src={profileImage || backendUrl + authUser.profileImageUrl}
+                    src={profileImage || (user && backendUrl + user.profileImageUrl) || ""}
                     alt="Profile Image"
                     size="lg"
                 />
@@ -105,10 +94,10 @@ export default function UpdateProfileForm({ authToken }: { authToken: string }) 
                 label="First Name"
                 placeholder="Enter your first name"
                 name="firstname"
-                value={authUser?.firstName}
+                value={user?.firstName || ""}
                 onChange={(e) =>
-                    setAuthUser((prev) => ({
-                        ...prev,
+                    setUser((prevUser) => ({
+                        ...prevUser,
                         firstName: e.target.value,
                     }))
                 }
@@ -119,10 +108,10 @@ export default function UpdateProfileForm({ authToken }: { authToken: string }) 
                 label="Last Name"
                 placeholder="Enter your last name"
                 name="lastname"
-                value={authUser?.lastName}
+                value={user?.lastName || ""}
                 onChange={(e) =>
-                    setAuthUser((prev) => ({
-                        ...prev,
+                    setUser((prevUser) => ({
+                        ...prevUser,
                         lastName: e.target.value,
                     }))
                 }
