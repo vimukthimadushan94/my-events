@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Event } from "@/types/mainTypes";
 
 export default function EventSingleItem({ event }: { event: Event }) {
-
+    const user = event.createdByUser;
     return (
         <Card className="max-w-[340px]" style={{ backgroundColor: event.color }}>
             <Link href={"/event/" + event.id}
@@ -15,7 +15,7 @@ export default function EventSingleItem({ event }: { event: Event }) {
                             isBordered
                             radius="full"
                             size="md"
-                            src="https://nextui.org/avatars/avatar-1.png"
+                            src={user ? process.env.NEXT_PUBLIC_APP_URL + user.profilePicturePath : "https://nextui.org/avatars/avatar-1.png"}
                         />
                         <div className="flex flex-col gap-1 items-start justify-center">
                             <h4 className="text-small font-semibold leading-none text-default-600">{event.name}</h4>

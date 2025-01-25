@@ -49,7 +49,6 @@ export default function UpdateProfileForm({ authToken }: { authToken: string }) 
                     lastName: data.lastName,
                     profileImageUrl: data.profilePicturePath
                 };
-                console.log(userResponse);
                 setUser(userResponse);
                 toast.success("Profile updated successfully!");
                 router.push("/");
