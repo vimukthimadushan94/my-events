@@ -1,30 +1,56 @@
-import { Card, CardHeader, CardBody, CardFooter, Avatar } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Avatar, Button } from "@nextui-org/react";
 
 export default async function SingleEventItem({ eventItems }: { eventItems: any }) {
-
     return (
-
-        <div className="flex items-center justify-center min-h-screen">
-            <div className="gap-4 grid grid-cols-2 sm:grid-cols-4 m-6">
+        <div className="flex flex-col items-center justify-center min-h-screen p-6">
+            <div className="space-y-6 w-full max-w-5xl">
                 {eventItems.map((eventItem: any) => (
-                    <Card className="max-w-[340px]" >
-
-                        <CardHeader className="justify-between">
-                            <div className="flex gap-5">
-
-                                <div className="flex flex-col gap-1 items-start justify-center">
-                                    <h4 className="text-small font-semibold leading-none text-default-600">{eventItem.name}</h4>
+                    <Card className="w-full shadow-md rounded-lg" key={eventItem.id}>
+                        <CardHeader className="flex justify-between items-center p-4">
+                            <div>
+                                <h3 className="text-xl font-bold">{eventItem.name}</h3>
+                                <p className="text-sm">
+                                    {`Start: ${new Date(eventItem.from).toLocaleString()}`}
+                                </p>
+                                <p className="text-sm">
+                                    {`End: ${new Date(eventItem.to).toLocaleString()}`}
+                                </p>
+                            </div>
+                            <div className="flex gap-2">
+                                <Button
+                                    size="sm"
+                                >
+                                    Edit
+                                </Button>
+                                <Button
+                                    className="text-white bg-red-500 hover:bg-red-600"
+                                    size="sm"
+                                >
+                                    Delete
+                                </Button>
+                            </div>
+                        </CardHeader>
+                        <CardBody className="px-4 py-3">
+                            <p className="text-gray-600">{eventItem.description}</p>
+                        </CardBody>
+                        <CardFooter className="flex flex-col gap-4 px-4 py-3">
+                            <div>
+                                <h4 className="font-semibold text-gray-700">People Attached:</h4>
+                                <div className="flex gap-2 mt-2">
+                                    {eventItem.eventItemUsers.map((person: any, index: number) => (
+                                        <div key={index} className="flex items-center gap-2">
+                                            <Avatar
+                                                src={process.env.NEXT_PUBLIC_APP_URL + person.profilePicturePath || ""}
+                                                size="sm"
+                                            />
+                                            <p>{person.firstName}</p>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-
-                        </CardHeader>
-                        <CardBody className="px-3 py-0 text-small text-default-400">
-                            <p>{eventItem.description}</p>
-                        </CardBody>
-                        <CardFooter className="gap-3">
-                            <div className="flex gap-1">
-                                <p className="font-semibold text-default-400 text-small">4</p>
-                                <p className=" text-default-400 text-small">Tasks</p>
+                            <div className="flex justify-between text-sm text-gray-500">
+                                <p>{`Start Date: ${new Date(eventItem.startDate).toLocaleDateString()}`}</p>
+                                <p>{`End Date: ${new Date(eventItem.endDate).toLocaleDateString()}`}</p>
                             </div>
                         </CardFooter>
                     </Card>
@@ -33,4 +59,3 @@ export default async function SingleEventItem({ eventItems }: { eventItems: any 
         </div>
     );
 }
-
