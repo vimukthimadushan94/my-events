@@ -4,19 +4,22 @@ import LogoutButton from "@/app/site/LogoutButton";
 import { auth } from "@/app/auth";
 import CreateEventForm from "../events/createform";
 import ProfileSection from "./ProfileSection";
+import Image from "next/image";
 
 export const AcmeLogo = () => {
     return (
-        <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
-            <path
-                clipRule="evenodd"
-                d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-                fill="currentColor"
-                fillRule="evenodd"
+        <div className="flex items-center justify-center p-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl shadow-lg">
+            <Image
+                src="/logo/Eventtifi-logo.png"
+                className="w-36 h-16 object-contain drop-shadow-lg"
+                width={150}
+                height={100}
+                alt="Eventtifi Logo"
             />
-        </svg>
+        </div>
     );
 };
+
 export default async function SiteHeader() {
 
     const session = await auth();
@@ -26,7 +29,6 @@ export default async function SiteHeader() {
             <Navbar shouldHideOnScroll>
                 <NavbarBrand>
                     <AcmeLogo />
-                    <p className="font-bold text-inherit">ACME</p>
                 </NavbarBrand>
                 <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 </NavbarContent>
@@ -51,7 +53,6 @@ export default async function SiteHeader() {
                 <Navbar shouldHideOnScroll>
                     <NavbarBrand>
                         <AcmeLogo />
-                        <p className="font-bold text-inherit">ACME</p>
                     </NavbarBrand>
                     <NavbarContent className="hidden sm:flex gap-4" justify="center">
                         <NavbarItem>
