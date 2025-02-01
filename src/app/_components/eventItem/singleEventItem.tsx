@@ -33,26 +33,33 @@ export default async function SingleEventItem({ eventItems }: { eventItems: any 
                         <CardBody className="px-4 py-3">
                             <p className="text-gray-600">{eventItem.description}</p>
                         </CardBody>
-                        <CardFooter className="flex flex-col gap-4 px-4 py-3">
-                            <div>
-                                <h4 className="font-semibold text-gray-700">People Attached:</h4>
-                                <div className="flex gap-2 mt-2">
-                                    {eventItem.eventItemUsers.map((person: any, index: number) => (
-                                        <div key={index} className="flex items-center gap-2">
-                                            <Avatar
-                                                src={process.env.NEXT_PUBLIC_APP_URL + person.profilePicturePath || ""}
-                                                size="sm"
-                                            />
-                                            <p>{person.firstName}</p>
-                                        </div>
-                                    ))}
+                        {eventItem.eventItemUsers.length > 0 ? (
+                            <CardFooter className="flex flex-col gap-4 px-4 py-3">
+                                <div>
+                                    <h4 className="font-semibold text-gray-700">Acting Persons:</h4>
+                                    <div className="flex gap-2 mt-2">
+                                        {eventItem.eventItemUsers.map((person: any, index: number) => (
+                                            <div key={index} className="flex items-center gap-2">
+                                                <Avatar
+                                                    size="sm"
+                                                    src={
+                                                        person.profilePicturePath
+                                                            ? `${process.env.NEXT_PUBLIC_APP_URL}${person.profilePicturePath}`
+                                                            : `https://ui-avatars.com/api/?name=${encodeURIComponent(person.firstName)}+${encodeURIComponent(person.lastName)}`
+                                                    }
+                                                />
+                                                <p>{person.firstName}</p>
+                                            </div>
+                                        ))}
+
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex justify-between text-sm text-gray-500">
-                                <p>{`Start Date: ${new Date(eventItem.startDate).toLocaleDateString()}`}</p>
-                                <p>{`End Date: ${new Date(eventItem.endDate).toLocaleDateString()}`}</p>
-                            </div>
-                        </CardFooter>
+                                <div className="flex justify-between text-sm text-gray-500">
+                                    <p>{`Start Date: ${new Date(eventItem.startDate).toLocaleDateString()}`}</p>
+                                    <p>{`End Date: ${new Date(eventItem.endDate).toLocaleDateString()}`}</p>
+                                </div>
+                            </CardFooter>
+                        ) : null}
                     </Card>
                 ))}
             </div>
