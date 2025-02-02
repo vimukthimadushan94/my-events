@@ -9,13 +9,15 @@ import Image from "next/image";
 export const AcmeLogo = () => {
     return (
         <div className="flex items-center justify-center p-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl shadow-lg">
-            <Image
-                src="/logo/Eventtifi-logo.png"
-                className="w-36 h-16 object-contain drop-shadow-lg"
-                width={150}
-                height={100}
-                alt="Eventtifi Logo"
-            />
+            <Link href="/">
+                <Image
+                    src="/logo/Eventtifi-logo.png"
+                    className="w-36 h-16 object-contain drop-shadow-lg"
+                    width={150}
+                    height={100}
+                    alt="Eventtifi Logo"
+                />
+            </Link>
         </div>
     );
 };
@@ -56,7 +58,7 @@ export default async function SiteHeader() {
                     </NavbarBrand>
                     <NavbarContent className="hidden sm:flex gap-4" justify="center">
                         <NavbarItem>
-                            {/* <CreateEventForm authToken={userToken} /> */}
+                            <CreateEventForm authToken={userToken} />
                         </NavbarItem>
                         <NavbarItem isActive>
                             <Link aria-current="page" href="/event/list">

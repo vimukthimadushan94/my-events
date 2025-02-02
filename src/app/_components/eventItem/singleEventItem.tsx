@@ -48,12 +48,7 @@ export default function SingleEventItem({ eventItems, eventId }: { eventItems: a
                                                 <p>{person.firstName}</p>
                                             </div>
                                         ))}
-
                                     </div>
-                                </div>
-                                <div className="flex justify-between text-sm text-gray-500">
-                                    <p>{`Start Date: ${new Date(eventItem.startDate).toLocaleDateString()}`}</p>
-                                    <p>{`End Date: ${new Date(eventItem.endDate).toLocaleDateString()}`}</p>
                                 </div>
                             </CardFooter>
                         ) : null}
