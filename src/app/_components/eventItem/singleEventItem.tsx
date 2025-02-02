@@ -1,6 +1,8 @@
 import { Card, CardHeader, CardBody, CardFooter, Avatar, Button } from "@nextui-org/react";
+import DeleteEventButton from "./deleteButton";
 
-export default async function SingleEventItem({ eventItems }: { eventItems: any }) {
+export default function SingleEventItem({ eventItems, eventId }: { eventItems: any, eventId: string }) {
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-6">
             <div className="space-y-6 w-full max-w-5xl">
@@ -22,12 +24,7 @@ export default async function SingleEventItem({ eventItems }: { eventItems: any 
                                 >
                                     Edit
                                 </Button>
-                                <Button
-                                    className="text-white bg-red-500 hover:bg-red-600"
-                                    size="sm"
-                                >
-                                    Delete
-                                </Button>
+                                <DeleteEventButton eventItemId={eventItem.id} eventId={eventId} />
                             </div>
                         </CardHeader>
                         <CardBody className="px-4 py-3">

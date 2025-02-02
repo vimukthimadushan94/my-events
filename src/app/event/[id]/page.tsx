@@ -2,7 +2,6 @@
 import CreateEventItem from "@/app/_components/eventItem/createEventItem";
 import SingleEventItem from "@/app/_components/eventItem/singleEventItem";
 import { auth } from "@/app/auth";
-import { Session } from "next-auth";
 
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -30,7 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         return (
             <>
                 <CreateEventItem users={users} eventItemId={id} />
-                <SingleEventItem eventItems={eventItems} />
+                <SingleEventItem eventItems={eventItems} eventId={id} />
             </>
         );
     }
