@@ -7,16 +7,15 @@ export default function EventSingleItem({ event }: { event: Event }) {
     const user = event.createdByUser;
     const avatarSrc = user?.profilePicturePath
         ? `${process.env.NEXT_PUBLIC_APP_URL}${user.profilePicturePath}`
-        : "https://nextui.org/avatars/avatar-1.png";
+        : `https://ui-avatars.com/api/?name=${encodeURIComponent(user.firstName)}+${encodeURIComponent(user.lastName)}`;
 
     return (
         <Card
-            className="w-[360px] overflow-hidden rounded-2xl shadow-lg transition-transform transform hover:scale-[1.02] hover:shadow-xl"
-            style={{ backgroundColor: event.color }}
+            className="w-[360px] overflow-hidden rounded-2xl shadow-lg transition-transform transform hover:scale-[1.02] hover:shadow-xl relative bg-background mb-4 border border-gray-300 dark:border-gray-700"
         >
+            <div className="absolute top-0 left-0 h-full w-1" style={{ backgroundColor: event.color }}></div>
             <Link href={`/event/${event.id}`} className="flex flex-col h-full">
-                {/* Header */}
-                <CardHeader className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md">
+                <CardHeader className="flex justify-between items-center p-4 backdrop-blur-md" style={{ backgroundColor: `${event.color}20`, color: "inherit" }}>
                     <div className="flex items-center gap-4">
                         <Avatar
                             isBordered
@@ -26,20 +25,16 @@ export default function EventSingleItem({ event }: { event: Event }) {
                             name={user?.firstName || "User"}
                         />
                         <div className="flex flex-col">
-                            <h4 className="text-md font-semibold text-gray-800">{event.name}</h4>
-                            <p className="text-sm text-gray-600">{user?.firstName || "Unknown Creator"}</p>
+                            <h4 className="text-md font-semibold text-foreground">{event.name}</h4>
+                            <p className="text-sm text-foreground/80">{user?.firstName || "Unknown Creator"}</p>
                         </div>
                     </div>
                 </CardHeader>
-
-                {/* Body */}
-                <CardBody className="px-5 py-3 text-gray-700 flex-grow">
+                <CardBody className="px-5 py-3 text-foreground flex-grow">
                     <p className="text-sm leading-relaxed">{event.description}</p>
                 </CardBody>
-
-                {/* Footer */}
-                <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md">
-                    <div className="flex items-center gap-1 text-gray-600 text-sm">
+                <CardFooter className="flex justify-between items-center p-4 backdrop-blur-md" style={{ backgroundColor: `${event.color}20`, color: "inherit" }}>
+                    <div className="flex items-center gap-1 text-foreground/80 text-sm">
                         <span className="font-semibold">4</span>
                         <span>Tasks</span>
                     </div>
