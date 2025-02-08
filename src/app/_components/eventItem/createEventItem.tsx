@@ -20,6 +20,32 @@ import UserDropdown from "./userDropdown";
 import { User } from "@/types/mainTypes";
 import { useRouter } from "next/navigation";
 
+export const PlusIcon = ({ size = 24, width, height, ...props }) => {
+    return (
+        <svg
+            aria-hidden="true"
+            fill="none"
+            focusable="false"
+            height={size || height}
+            role="presentation"
+            viewBox="0 0 24 24"
+            width={size || width}
+            {...props}
+        >
+            <g
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+            >
+                <path d="M6 12h12" />
+                <path d="M12 18V6" />
+            </g>
+        </svg>
+    );
+};
+
 export default function CreateEventItem({ users, eventItemId }: { users: User[], eventItemId: string }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
@@ -75,9 +101,9 @@ export default function CreateEventItem({ users, eventItemId }: { users: User[],
 
     return (
         <>
-            <div className="flex flex-wrap gap-3">
-                <Button key={"event-button"} onPress={() => onOpen()}>
-                    Create Event Item
+            <div className="flex flex-wrap justify-end mt-aut mr-6 p-6">
+                <Button key={"event-button"} onPress={() => onOpen()} color="primary" endContent={<PlusIcon width={undefined} height={undefined} />}>
+                    Add New
                 </Button>
             </div>
             <Drawer isOpen={isOpen} size={"4xl"} onClose={onClose}>

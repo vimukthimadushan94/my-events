@@ -4,7 +4,7 @@ import DeleteEventButton from "./deleteButton";
 export default function SingleEventItem({ eventItems, eventId }: { eventItems: any, eventId: string }) {
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-6">
+        <div className="flex flex-col items-center justify-center p-6">
             <div className="space-y-6 w-full max-w-5xl">
                 {eventItems.map((eventItem: any) => (
                     <Card className="w-full shadow-md rounded-lg" key={eventItem.id}>
