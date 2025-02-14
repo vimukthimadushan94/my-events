@@ -28,8 +28,10 @@ export default async function Page({ params }: { params: { id: string } }) {
 
         return (
             <>
-                <CreateEventItem users={users} eventItemId={id} />
-                <SingleEventItem eventItems={eventItems} eventId={id} />
+                <div className="min-h-screen">
+                    <CreateEventItem users={users} eventItemId={id} />
+                    <SingleEventItem eventItems={eventItems} eventId={id} />
+                </div>
             </>
         );
     }

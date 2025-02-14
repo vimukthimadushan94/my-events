@@ -58,7 +58,7 @@ export default async function SiteHeader() {
                     </NavbarBrand>
                     <NavbarContent className="hidden sm:flex gap-4" justify="center">
                         <NavbarItem>
-                            {/* <CreateEventForm authToken={userToken} /> */}
+                            <CreateEventForm authToken={userToken} />
                         </NavbarItem>
                         <NavbarItem isActive>
                             <Link aria-current="page" href="/event/list">
