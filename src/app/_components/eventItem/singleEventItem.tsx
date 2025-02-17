@@ -28,12 +28,12 @@ export default function SingleEventItem({ eventItems, eventId }: { eventItems: a
                             </div>
                         </CardHeader>
                         <CardBody className="px-4 py-3">
-                            <p className="text-gray-600">{eventItem.description}</p>
+                            <p>{eventItem.description}</p>
                         </CardBody>
                         {eventItem.eventItemUsers.length > 0 ? (
                             <CardFooter className="flex flex-col gap-4 px-4 py-3">
                                 <div>
-                                    <h4 className="font-semibold text-gray-700">Acting Persons:</h4>
+                                    <h4 className="font-semibold">Acting Persons:</h4>
                                     <div className="flex gap-2 mt-2">
                                         {eventItem.eventItemUsers.map((person: any, index: number) => (
                                             <div key={index} className="flex items-center gap-2">

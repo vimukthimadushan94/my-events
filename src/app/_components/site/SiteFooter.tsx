@@ -3,9 +3,8 @@ import Image from "next/image";
 export default function SiteFooter() {
     return (
         <>
-            <footer className="bg-gray-800 text-gray-300 py-6">
+            <footer className="bg-gray-800 text-gray-300 p-6">
                 <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 text-center md:text-left">
-                    {/* About Section */}
                     <div>
                         <h2 className="text-lg font-bold text-white mb-2">About Us</h2>
                         <p>
@@ -13,7 +12,6 @@ export default function SiteFooter() {
                             solutions.
                         </p>
                     </div>
-                    {/* Links Section */}
                     <div>
                         <h2 className="text-lg font-bold text-white mb-2">Quick Links</h2>
                         <ul className="space-y-2">
@@ -34,12 +32,11 @@ export default function SiteFooter() {
                             </li>
                         </ul>
                     </div>
-                    {/* Contact Section */}
                     <div>
                         <h2 className="text-lg font-bold text-white mb-2">Contact</h2>
                         <p>Email: contact@mysite.com</p>
-                        <p>Phone: +1 (555) 123-4567</p>
-                        <p>Address: 123 Web St, Code City</p>
+                        <p>Phone: 041 123-4567</p>
+                        <p>Address: Puistokatu 6A oulu</p>
                     </div>
                 </div>
                 <div className="text-center text-gray-500 mt-6">

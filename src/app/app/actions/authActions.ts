@@ -5,6 +5,7 @@ import { signIn } from "@/app/auth";
 
 export async function registerAction(formData: { [key: string]: any }) {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+    console.log(formData)
     const response = await fetch(`${appUrl}/api/Auth/register`, {
         method: "POST",
         headers: {

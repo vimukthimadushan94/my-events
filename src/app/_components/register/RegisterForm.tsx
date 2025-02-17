@@ -5,37 +5,18 @@ import { toast, ToastContainer } from "react-toastify";
 import { registerAction } from "@/app/app/actions/authActions";
 import { Form, Input } from "@nextui-org/react";
 
-type FormData = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-};
-
 const RegisterForm: React.FC = () => {
-    const [formData, setFormData] = useState<FormData>({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-    });
 
     const router = useRouter();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
 
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const formData = Object.fromEntries(new FormData(e.currentTarget));
         try {
             await registerAction(formData);
             toast.success("Registration successful!", { position: "top-left" });
-            setTimeout(() => router.push("/"), 2500);
+            setTimeout(() => router.push("/"), 2000);
         } catch (error: any) {
             toast.error(error.message || "An unexpected error occurred.", { position: "top-left" });
         }
