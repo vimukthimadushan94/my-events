@@ -5,10 +5,11 @@ This is a full-stack web application built with Next.js for the frontend and ASP
 ## Video Resources
 
 ### Authentication
-[![Next.js Overview](https://img.youtube.com/vi/QCRuecPlyMo/maxresdefault.jpg)](https://www.youtube.com/watch?v=QCRuecPlyMo)
+[![Next.js Overview](https://img.youtube.com/vi/QCRuecPlyMo/maxresdefault.jpg)](https://www.youtube.com/watch?v=QCRuecPlyMo)(https://www.youtube.com/watch?v=QCRuecPlyMo "Click to play ▶")
+
 
 ### Application Overview
-[![Next.js Authentication](https://img.youtube.com/vi/lZ8Jgotxo5k/maxresdefault.jpg)](https://www.youtube.com/watch?v=lZ8Jgotxo5k)
+[![Next.js Authentication](https://img.youtube.com/vi/lZ8Jgotxo5k/maxresdefault.jpg)](https://www.youtube.com/watch?v=lZ8Jgotxo5k)(https://www.youtube.com/watch?v=lZ8Jgotxo5k "Click to play ▶")
 ## Getting Started
 
 ## Tech Stack
